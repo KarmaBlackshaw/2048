@@ -17,7 +17,10 @@
       </section>
 
       <section>
-        <div class="cell-container">
+        <div
+          id="2048"
+          class="cell-container"
+        >
           <div
             v-for="(currRow, rowKey) in flatBoard"
             :key="rowKey"
@@ -35,7 +38,6 @@
 <script>
 
 import _flatten from 'lodash/flatten'
-import Swipe from '@/config/swipe'
 
 const DIMENSIONS = 4
 
@@ -96,29 +98,6 @@ export default {
   },
 
   methods: {
-    initSwiper () {
-      const swiper = new Swipe('.cell-container')
-
-      swiper.onRight(() => {
-        const board = this.moveRight(this.board)
-        this.board = this.addRandom(board, 2)
-      })
-
-      swiper.onLeft(() => {
-        const board = this.moveLeft(this.board)
-        this.board = this.addRandom(board, 2)
-      })
-
-      swiper.onDown(() => {
-        const board = this.moveDown(this.board)
-        this.board = this.addRandom(board, 2)
-      })
-
-      swiper.onUp(() => {
-        const board = this.moveUp(this.board)
-        this.board = this.addRandom(board, 2)
-      })
-    },
 
     moveRight (board) {
       const newBoard = []
@@ -303,6 +282,56 @@ export default {
       }
 
       return isLucky ? newBoard : this.addRandom(board, number)
+    },
+
+    initSwiper () {
+      const x = { start: 0, end: 0 }
+      const y = { start: 0, end: 0 }
+
+      const slider = document.getElementById('2048')
+
+      function handleGesture () {
+        const xDiff = Math.abs(x.end - x.start)
+        const yDiff = Math.abs(y.end - y.start)
+
+        // vertical
+        if (xDiff > yDiff) {
+          return x.start > x.end
+            ? 'left'
+            : 'right'
+        }
+
+        return y.start > y.end
+          ? 'up'
+          : 'down'
+      }
+
+      slider.addEventListener('touchstart', e => {
+        x.start = e.changedTouches[0].screenX
+        y.start = e.changedTouches[0].screenY
+      })
+
+      slider.addEventListener('touchend', e => {
+        x.end = e.changedTouches[0].screenX
+        y.end = e.changedTouches[0].screenY
+        const direction = handleGesture()
+
+        const methodsByKey = {
+          right: this.moveRight,
+          left: this.moveLeft,
+          down: this.moveDown,
+          up: this.moveUp
+        }
+
+        const method = methodsByKey[direction]
+
+        if (!method) {
+          return
+        }
+
+        const board = method(this.board)
+        this.board = this.addRandom(board, 2)
+      })
     },
 
     handleArrowMovement (e) {
