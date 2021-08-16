@@ -35,6 +35,7 @@
 <script>
 
 import _flatten from 'lodash/flatten'
+import Swipe from '@/config/swipe'
 
 const DIMENSIONS = 4
 
@@ -90,10 +91,35 @@ export default {
   mounted () {
     document.addEventListener('keydown', this.handleArrowMovement)
 
+    this.initSwiper()
     this.board = this.addRandom(this.board, 2)
   },
 
   methods: {
+    initSwiper () {
+      const swiper = new Swipe('main')
+
+      swiper.onRight(() => {
+        const board = this.moveRight(this.board)
+        this.board = this.addRandom(board, 2)
+      })
+
+      swiper.onLeft(() => {
+        const board = this.moveLeft(this.board)
+        this.board = this.addRandom(board, 2)
+      })
+
+      swiper.onDown(() => {
+        const board = this.moveDown(this.board)
+        this.board = this.addRandom(board, 2)
+      })
+
+      swiper.onUp(() => {
+        const board = this.moveUp(this.board)
+        this.board = this.addRandom(board, 2)
+      })
+    },
+
     moveRight (board) {
       const newBoard = []
 
