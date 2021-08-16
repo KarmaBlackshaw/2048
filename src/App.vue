@@ -98,7 +98,6 @@ export default {
   },
 
   methods: {
-
     moveRight (board) {
       const newBoard = []
 
@@ -112,7 +111,7 @@ export default {
           const currNum = filteredRow[j]
           const nextNum = filteredRow[j + 1]
 
-          if (currNum === prevNum) {
+          if (currNum === nextNum) {
             newRow.push(currNum * 2)
             j++ // increment iteration
             continue
@@ -155,7 +154,7 @@ export default {
           const currNum = filteredRow[j]
           const nextNum = filteredRow[j + 1]
 
-          if (currNum === prevNum) {
+          if (currNum === nextNum) {
             newRow.unshift(currNum * 2)
             j++ // increment iteration
             continue
@@ -285,6 +284,11 @@ export default {
     },
 
     initSwiper () {
+      const isMobile = navigator.userAgentData.mobile
+      if (!isMobile) {
+        return
+      }
+
       const x = { start: 0, end: 0 }
       const y = { start: 0, end: 0 }
 
@@ -405,19 +409,19 @@ main {
   border-radius: 5px;
   background-color: #BAADA1;
 
-.cell-container--item {
-  height: 65px;
-  width: 20px;
-  flex: 1 1 21%;
-  border-radius: 5px;
-  margin: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  background-color: #C8BAAE;
-}
+  .cell-container--item {
+    height: 65px;
+    width: 20px;
+    flex: 1 1 21%;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: #C8BAAE;
+  }
 }
 
 </style>
