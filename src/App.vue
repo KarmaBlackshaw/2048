@@ -52,12 +52,6 @@
         </div>
       </section>
     </article>
-
-    <audio
-      id="slide"
-      src="@/assets/slide.mp3"
-      muted
-    ></audio>
   </main>
 </template>
 
@@ -120,6 +114,7 @@ export default {
     document.addEventListener('keydown', this.handleArrowMovement)
 
     this.initSwiper()
+
     this.board = this.addRandom(this.board, 2)
   },
 
@@ -275,6 +270,10 @@ export default {
     },
 
     reset () {
+      const file = require('@/assets/reset.mp3')
+      const audio = new Audio(file)
+      audio.play()
+
       this.board = this.addRandom([
         [null, null, null, null],
         [null, null, null, null],
