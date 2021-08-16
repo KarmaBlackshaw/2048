@@ -52,6 +52,12 @@
         </div>
       </section>
     </article>
+
+    <audio
+      id="slide"
+      src="@/assets/slide.mp3"
+      muted
+    ></audio>
   </main>
 </template>
 
@@ -118,6 +124,12 @@ export default {
   },
 
   methods: {
+    playSlide () {
+      const file = require('@/assets/slide.mp3')
+      const audio = new Audio(file)
+      audio.play()
+    },
+
     moveRight (board) {
       const newBoard = []
 
@@ -355,6 +367,7 @@ export default {
 
         const board = method(this.board)
         this.board = this.addRandom(board, 2)
+        this.playSlide()
       })
     },
 
@@ -374,6 +387,7 @@ export default {
 
       const board = method(this.board)
       this.board = this.addRandom(board, 2)
+      this.playSlide()
     }
   }
 }
