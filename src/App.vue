@@ -31,6 +31,23 @@
           </div>
         </div>
       </section>
+
+      <section>
+        <div class="footer">
+          <p class="footer-title">
+            HOW TO PLAY:
+          </p>
+
+          <p class="footer-caption">
+            <i>For Computers: </i> Use your arrow keys to move the tiles.
+          </p>
+          <p class="footer-caption">
+            <i>For Mobiles: </i> Swipe to move the tiles.
+          </p>
+
+          Tiles with the same number merge into one when they touch. Add them up to reach <b>2048</b>!
+        </div>
+      </section>
     </article>
   </main>
 </template>
@@ -364,6 +381,30 @@ $app-width: 310px;
 
 main {
   background-color: #FBF9EF;
+}
+
+article {
+  max-width: $app-width;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.footer {
+  margin-top: 10px;
+  font-size: 0.7rem;
+
+  .footer-title {
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  .footer-caption {
+    font-size: 0.75rem;
+
+    i {
+      font-weight: bold;
+    }
+  }
 }
 
 .navigation {
