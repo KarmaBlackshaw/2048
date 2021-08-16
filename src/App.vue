@@ -459,8 +459,10 @@ article {
   padding: 5px;
   border-radius: 5px;
   background-color: #BAADA1;
+  user-select: none;
 
   .cell-container--item {
+    user-select: none;
     height: 65px;
     width: 20px;
     flex: 1 1 21%;
