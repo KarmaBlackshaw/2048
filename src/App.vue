@@ -10,11 +10,12 @@
       </section>
 
       <section>
-        <div class="grid grid-cols-4 gap-1 w-7/12 mx-auto">
+        <div class="cell-container">
           <div
             v-for="(currRow, rowKey) in flatBoard"
             :key="rowKey"
-            class="h-20 border flex items-center justify-center text-2xl"
+            class="cell-container--item"
+            :style="`background-color: ${tileColors[currRow] || tileColors.default}`"
           >
             {{ currRow }}
           </div>
@@ -36,22 +37,54 @@ export default {
   data () {
     return {
       board: [
-        [2, 2, 3, 3],
-        [2, 1, 2, 1],
-        [2, 1, 2, 1],
-        [4, 3, 4, 4]
-      ]
+        [null, null, null, null],
+        [null, null, null, null],
+        [null, null, null, null],
+        [null, null, null, null]
+      ],
+
+      tileColors: {
+        null: '#C8BAAE',
+        2: '#EEE5DB',
+        4: '#ECE0C9',
+        8: '#F2B078',
+        16: '#F59462',
+        32: '#F67D5E',
+        64: '#F65F3A',
+        128: '#EDCF72',
+        256: '#EDCD60',
+        512: '#EDC951',
+        1024: '#ECC53E',
+        2048: '#EDC32F',
+        default: '#3D3A33'
+
+      }
     }
   },
 
   computed: {
     flatBoard () {
       return _flatten(this.board)
+    },
+
+    hasSpace () {
+      const flatBoard = this.flatBoard
+      for (let i = 0; i < flatBoard.length; i++) {
+        const curr = flatBoard[i]
+
+        if (curr === null) {
+          return true
+        }
+      }
+
+      return false
     }
   },
 
   mounted () {
     document.addEventListener('keydown', this.handleArrowMovement)
+
+    this.board = this.addRandom(this.board, 2)
   },
 
   methods: {
@@ -199,6 +232,38 @@ export default {
       return newBoard
     },
 
+    addRandom (board, number) {
+      const newBoard = []
+      const luck = 0.8
+      let isLucky = 0
+
+      if (!this.hasSpace) {
+        return board
+      }
+
+      for (let i = 0; i < board.length; i++) {
+        const currRow = board[i]
+        const isLuckyRow = Math.random() > luck
+        const arr = []
+
+        for (let j = 0; j < currRow.length; j++) {
+          const currNum = currRow[j]
+          const isLuckyNumber = Math.random() > luck
+
+          if (currNum === null && isLuckyNumber && isLuckyRow && !isLucky) {
+            arr.push(number)
+            isLucky = 1
+          } else {
+            arr.push(currNum)
+          }
+        }
+
+        newBoard.push(arr)
+      }
+
+      return isLucky ? newBoard : this.addRandom(board, number)
+    },
+
     handleArrowMovement (e) {
       const methodsByKey = {
         ArrowRight: this.moveRight,
@@ -213,9 +278,39 @@ export default {
         return
       }
 
-      this.board = method(this.board)
+      const board = method(this.board)
+      this.board = this.addRandom(board, 2)
     }
   }
-
 }
 </script>
+
+<style lang="scss" scoped>
+main {
+  background-color: #FBF9EF;
+}
+.cell-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 530px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #BAADA1;
+}
+
+.cell-container--item {
+  height: 100px;
+  width: 70px;
+  flex: 1 1 21%;
+  border-radius: 5px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  background-color: #C8BAAE;
+}
+</style>
