@@ -35,15 +35,18 @@
       <section>
         <div class="footer">
           <p class="footer-title">
-            HOW TO PLAY:
+            HOW TO PLAY
           </p>
 
-          <p class="footer-caption">
-            <i>For Computers: </i> Use your arrow keys to move the tiles.
-          </p>
-          <p class="footer-caption">
-            <i>For Mobiles: </i> Swipe to move the tiles.
-          </p>
+          <hr>
+
+          <div class="footer-caption">
+            <p><i>For Computers: </i></p> Use your arrow keys to move the tiles.
+          </div>
+
+          <div class="footer-caption">
+            <p><i>For Mobiles: </i></p> Swipe to move the tiles.
+          </div>
 
           Tiles with the same number merge into one when they touch. Add them up to reach <b>2048</b>!
         </div>
@@ -393,13 +396,20 @@ article {
   margin-top: 10px;
   font-size: 0.7rem;
 
+  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   .footer-title {
     font-size: 0.8rem;
     font-weight: 900;
+    text-align: center;
   }
 
   .footer-caption {
     font-size: 0.75rem;
+    margin-bottom: 10px;
 
     i {
       font-weight: bold;
