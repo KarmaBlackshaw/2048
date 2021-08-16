@@ -97,7 +97,7 @@ export default {
 
   methods: {
     initSwiper () {
-      const swiper = new Swipe('main')
+      const swiper = new Swipe('.cell-container')
 
       swiper.onRight(() => {
         const board = this.moveRight(this.board)
