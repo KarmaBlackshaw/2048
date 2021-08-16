@@ -1,11 +1,18 @@
 <template>
   <main class="min-h-screen">
     <article>
-      <section class="mb-10">
-        <div class="flex items-center full-width">
-          <div class="text-5xl font-medium text-black mx-auto">
-            2048
-          </div>
+      <section class="navigation">
+        <div class="navigation-item nav-item--title">
+          2048
+        </div>
+
+        <div class="navigation-item nav-item--actions">
+          <button
+            class="btn btn--reset"
+            @click="reset"
+          >
+            Reset
+          </button>
         </div>
       </section>
 
@@ -57,7 +64,6 @@ export default {
         1024: '#ECC53E',
         2048: '#EDC32F',
         default: '#3D3A33'
-
       }
     }
   },
@@ -101,8 +107,8 @@ export default {
           const currNum = filteredRow[j]
           const nextNum = filteredRow[j + 1]
 
-          if (currNum === nextNum) {
-            newRow.push(currNum + nextNum)
+          if (currNum === prevNum) {
+            newRow.push(currNum * 2)
             j++ // increment iteration
             continue
           }
@@ -144,8 +150,8 @@ export default {
           const currNum = filteredRow[j]
           const nextNum = filteredRow[j + 1]
 
-          if (currNum === nextNum) {
-            newRow.unshift(currNum + nextNum)
+          if (currNum === prevNum) {
+            newRow.unshift(currNum * 2)
             j++ // increment iteration
             continue
           }
@@ -232,6 +238,15 @@ export default {
       return newBoard
     },
 
+    reset () {
+      this.board = this.addRandom([
+        [null, null, null, null],
+        [null, null, null, null],
+        [null, null, null, null],
+        [null, null, null, null]
+      ], 2)
+    },
+
     addRandom (board, number) {
       const newBoard = []
       const luck = 0.8
@@ -286,26 +301,61 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$app-width: 310px;
+
 main {
   background-color: #FBF9EF;
 }
+
+.navigation {
+  max-width: $app-width;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  height: 64px;
+  align-items: center;
+
+  .nav-item--title {
+    font-weight: bold;
+    font-size: 3rem;
+  }
+
+  .nav-item--actions {
+    display: flex;
+
+  align-items: center;
+  }
+}
+
+.btn {
+  padding: 3px 12px;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+
+  &.btn--reset {
+    border: 1px solid brown;
+    color: brown;
+  }
+}
+
 .cell-container {
   display: flex;
   flex-wrap: wrap;
-  max-width: 530px;
+  max-width: $app-width;
   margin-right: auto;
   margin-left: auto;
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   background-color: #BAADA1;
-}
 
 .cell-container--item {
-  height: 100px;
-  width: 70px;
+  height: 65px;
+  width: 20px;
   flex: 1 1 21%;
   border-radius: 5px;
-  margin: 10px;
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -313,4 +363,6 @@ main {
   font-weight: bold;
   background-color: #C8BAAE;
 }
+}
+
 </style>
