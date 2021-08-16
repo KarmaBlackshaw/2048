@@ -1,5 +1,5 @@
 <template>
-  <main class="min-h-screen">
+  <main>
     <article>
       <section class="navigation">
         <div class="navigation-item nav-item--title">
@@ -397,6 +397,7 @@ $app-width: 310px;
 
 main {
   background-color: #FBF9EF;
+  height: 100vh;
 }
 
 article {
