@@ -474,6 +474,7 @@ article {
   border-radius: 5px;
   background-color: #BAADA1;
   user-select: none;
+  overscroll-behavior: none;
 
   .cell-container--item {
     user-select: none;
