@@ -342,11 +342,13 @@ export default {
       }
 
       slider.addEventListener('touchstart', e => {
+        e.preventDefault()
         x.start = e.changedTouches[0].screenX
         y.start = e.changedTouches[0].screenY
       })
 
       slider.addEventListener('touchend', e => {
+        e.preventDefault()
         x.end = e.changedTouches[0].screenX
         y.end = e.changedTouches[0].screenY
         const direction = handleGesture()
